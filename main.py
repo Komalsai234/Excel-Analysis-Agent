@@ -20,23 +20,11 @@ weekly_data = """
 |          | %Visit share                   | 0.53%          | 5           | -1           |
 |          | New Activation                 | 2.1K           | 92%         | -21.45%      |
 |          | Churn                          | 3.2K           | -28.73%     | -72.18%      |
-|          | Mycoin balance( Liquidity ) | 102M           | 14%         | -0.98%       |
+|          | Supercoin balance( Liquidity ) | 102M           | 14%         | -0.98%       |
 |          | Program Cost 1P                | 7.5M           | -51.23%     | -42.65%      |
 """
 
-# Extract function name dynamically from the data
-def extract_function_name(data):
-    """Extract the function/program name from the data table"""
-    for line in data.split('\n'):
-        if '|' in line and 'Function' not in line and 'Base' in line:
-            parts = [p.strip() for p in line.split('|')]
-            if len(parts) > 1 and parts[1]:
-                return parts[1]
-    return "LOYALTY PROGRAM"
-
-function_name = extract_function_name(weekly_data)
-
-prompt = f"""Analyze {function_name} loyalty program performance and provide a concise summary of key metrics.
+prompt = f"""Analyze the loyalty program performance and provide a concise summary of key metrics.
 
 ## METRIC DEFINITIONS:
 
@@ -69,10 +57,10 @@ prompt = f"""Analyze {function_name} loyalty program performance and provide a c
 - Definition: Average revenue generated per active customer during the week
 - Unit: Currency (K = thousands)
 - Higher is better - indicates customer value
-- Relationship: SPC = TPC x AOV
+- Relationship: SPC = TPC × AOV
 
 **GMV (Gross Merchandise Value)** [derived]
-- Calculation: SPC x (Base x MAC%)
+- Calculation: SPC × (Base × MAC%)
 - Definition: Total value of all goods sold
 - Unit: Currency
 
@@ -89,30 +77,30 @@ prompt = f"""Analyze {function_name} loyalty program performance and provide a c
 
 ### Market Share Metrics:
 **GMV Share**
-- Calculation: (Program GMV / Total Platform GMV) x 100
+- Calculation: (Program GMV / Total Platform GMV) × 100
 - Definition: Percentage of total platform revenue from this program
 - Unit: Percentage
 - Higher is better - growing market position
 
 **Unit Share**
-- Calculation: (Program Units / Total Platform Units) x 100
+- Calculation: (Program Units / Total Platform Units) × 100
 - Definition: Percentage of total platform units from this program
 - Unit: Percentage
 
 **% Visit Share**
-- Calculation: (Program Visits / Total Platform Visits) x 100
+- Calculation: (Program Visits / Total Platform Visits) × 100
 - Definition: Percentage of total platform traffic from this program
 - Unit: Percentage
 - Compare with GMV share to assess conversion efficiency
 
 ### Loyalty Program Metrics:
-**Mycoin Balance (Liquidity)**
-- Definition: Total unredeemed Mycoin rewards held by all program customers
+**Supercoin Balance (Liquidity)**
+- Definition: Total unredeemed supercoin rewards held by all program customers
 - Unit: Currency (M = millions, B = billions)
 - Analysis: High growth may indicate low redemption (earn >> burn problem)
 
 **Program Cost 1P**
-- Definition: First-party cost to run {function_name} program (rewards, discounts, operations)
+- Definition: First-party cost to run the loyalty program (rewards, discounts, operations)
 - Unit: Currency (M = millions)
 - Lower is better IF performance maintained - indicates efficiency
 
@@ -168,7 +156,7 @@ completion = client.chat.completions.create(
             "content": prompt
         }
     ],
-    temperature=1.0,
+    temperature=0.9,
     max_completion_tokens=8192,
     top_p=1,
     stream=True,
@@ -176,7 +164,7 @@ completion = client.chat.completions.create(
 )
 
 print("="*80)
-print("BLACK PROGRAM - COMPREHENSIVE PERFORMANCE ANALYSIS")
+print("LOYALTY PROGRAM - COMPREHENSIVE PERFORMANCE ANALYSIS")
 print("Week: December 7-13, 2024")
 print("="*80)
 print()
